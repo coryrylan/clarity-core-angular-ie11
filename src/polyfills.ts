@@ -18,6 +18,42 @@
  * BROWSER POLYFILLS
  */
 
+import 'core-js';
+import 'resize-observer-polyfill/dist/ResizeObserver.global.js';
+
+(function (arr) {
+  arr.forEach(function (item) {
+    if (item.hasOwnProperty('prepend')) {
+      return;
+    }
+    Object.defineProperty(item, 'prepend', {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: function prepend() {
+        var argArr = Array.prototype.slice.call(arguments),
+          docFrag = document.createDocumentFragment();
+        
+        argArr.forEach(function (argItem) {
+          var isNode = argItem instanceof Node;
+          docFrag.appendChild(isNode ? argItem : document.createTextNode(String(argItem)));
+        });
+        
+        this.insertBefore(docFrag, this.firstChild);
+      }
+    });
+  });
+})([Element.prototype, Document.prototype, DocumentFragment.prototype]);
+
+// import 'resize-observer-polyfill/dist/ResizeObserver.global.js';
+// import '@webcomponents/webcomponentsjs/webcomponents-bundle.js';
+// import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js';
+
+// import { runCssVarsPolyfill } from '@clr/core';
+// import cssVars from 'css-vars-ponyfill';
+// runCssVarsPolyfill(cssVars);
+// runCssVarsPolyfill();
+
 /** IE10 and IE11 requires the following for NgClass support on SVG elements */
 // import 'classlist.js';  // Run `npm install --save classlist.js`.
 
