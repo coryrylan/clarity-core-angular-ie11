@@ -1,1 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~normalize.css/normalize.css';
+@import '~@clr/core/global.min';
+@import '~@clr/core/styles/module.shims.min';
+@import '~@clr/city/css/bundles/default.min';
